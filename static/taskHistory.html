@@ -1,0 +1,72 @@
+<div class="row">
+  <div class="col-md-9 col-sm-9 col-xs-12">
+    <div class="x_panel">
+      <div class="x_title">
+        <h2>Historial de tareas</h2>
+        <div class="clearfix"></div>
+      </div>
+      <div class="x_content">
+        <input ng-model="searchTask" tabindex="0" aria-invalid="false" type="text" class="form-control" placeholder="Filtrar tarea..." style="border-radius: 5px;">
+        <!-- task list -->
+        <table class="table table-striped projects">
+            <thead>
+              <tr>
+                <th>Modulo</th>
+                <th>Nombre</th>
+                <th>Fecha comprometida</th>
+                <th>Accion</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="tdTask in tasks | filter: (vm.client || '') && {client: {id : vm.client}} | filter:{$:searchTask}">
+                <td>
+                  {{ tdTask.module.tag }}
+                </td>
+                <td>
+                  <a href="#/task/{{tdTask.id}}">{{tdTask.title}}</a>
+                  <br />
+                  <small>Creada el {{tdTask.creation_date | moment:'DD/MM/YYYY'}}</small>
+                </td>
+                <td ng-if="tdTask.finish_date">
+                  {{ tdTask.finish_date | moment:'DD/MM/YYYY'}}
+                </td>
+                <td ng-if="!tdTask.finish_date">
+                  No existe fecha comprometida.
+                </td>
+                <td>
+                  <a ng-click="" href="" class="btn btn-info btn-xs">
+                    <i class="fa fa-pencil"></i>
+                  </a>
+                  <!--<a confirmed-click="deleteTask(tdTask.id)" ng-confirm-click="Desea borrar la tarea?" class="btn btn-danger btn-xs">
+                    <i class="fa fa-trash-o"></i>
+                  </a>-->
+                </td>
+              </tr>
+            </tbody>
+        </table>
+        <!-- task list -->
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3 col-sm-3 col-xs-12">
+    <div class="x_panel">
+      <div class="x_title">
+        <h2>Referentes</h2>
+        <div class="clearfix"></div>
+      </div>
+      <div class="x_content">
+        <div style="padding-right: 20px;">
+          <input ng-model="searchReferent" tabindex="0" aria-invalid="false" type="text" class="form-control" placeholder="Filtrar..." style="margin-left: 10px;border-radius: 5px;">
+          <br>
+        </div>
+        <div ng-repeat="client in clients | orderBy:['organization','lastname','firstname'] | filter:{$:searchReferent}" class="animated flipInY col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <div ng-click="vm.client = client.id" ng-class="{ marcado: vm.client === client.id }" class="tile-stats padd-top">
+            <h2>{{client.name}} {{client.lastname}}</h2>
+            <p>{{client.organization.name}}</p>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

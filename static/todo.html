@@ -1,0 +1,36 @@
+<!-- /checklist-tab -->
+<div ng-controller="todoController" class="wrapper-md">
+  <div>
+    <form ng-submit="addTodo()" id="todo-form" class="ng-pristine ng-valid">
+      <input ng-model="description" placeholder="Tarea a realizar" autofocus="" class="form-control input-lg ng-pristine ng-valid ng-touched" tabindex="0" aria-invalid="false">
+    </form>
+  </div>
+  <div aria-hidden="false" class="">
+    <ul class="nav nav-pills">
+      <li ui-sref-active="active">
+        <a ng-click="statusFilter = {}">Todas</a>
+      </li>
+      <li ui-sref-active="active">
+        <a ng-click="statusFilter = {done: false}">Activas</a>
+      </li>
+      <li ui-sref-active="active">
+        <a ng-click="statusFilter = {done: true}">Completas</a>
+      </li>
+    </ul>
+    <ul class="to_do">
+      <li ng-show="todoTasks !== []" ng-repeat="todo in todoTasks | filter:statusFilter track by $index">
+        <p>
+          <input icheck ng-model="todo.done" ng-change="doneTodo(todo.id)" type="checkbox"> 
+          {{todo.description}}
+        </p>
+      </li>
+    </ul> 
+  </div>
+  <div ng-if="todoTasks.length === 0" class="streamline b-l m-b">
+    <div class="sl-item b-danger b-l">
+      <div class="m-l">
+        <p>No se encontraron tareas.</p>
+      </div>
+    </div>
+  </div>
+</div>

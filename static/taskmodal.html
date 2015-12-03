@@ -1,0 +1,111 @@
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog" ng-controller="modalController">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form ng-submit="newTask()"> 
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Nueva tarea</h4>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-xs-12">
+              <div class="form-group">
+                <label for="title">Titulo :</label>
+                <input required type='text' class="form-control" ng-model="task.title" id="title">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-6">
+              <div class="form-group">
+                <label for="moduleSelect">Modulo :</label>
+                <select required name="moduleSelect" id="moduleSelect" ng-model="task.module" class="form-control">
+                  <option ng-repeat="optM in modules" value="{{optM.id}}">{{optM.tag}} - {{optM.name}}</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-xs-6">
+              <div class="form-group">
+                <label for="clientSelect">Cliente :</label>
+                <select required name="clientSelect" id="clientSelect" ng-model="task.client" class="form-control">
+                  <option ng-repeat="option in clients" value="{{option.id}}">{{option.name}} {{option.lastname}}</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-6">
+              <div class="form-group">
+                <label for="urgency">Urgencia :</label>
+                <input type='text' class="form-control" ng-model="task.urgency" id="urgency">
+              </div>
+          </div>
+            <div class="col-xs-6">
+              <div class="form-group">
+                <label for="estimation_hours">Horas estimadas:</label>
+                <input type='text' class="form-control" ng-model="task.estimation_hours" id="estimation_hours">
+              </div>
+            </div>
+          </div>  
+            <div class="row">
+              <div class="col-xs-6">  
+                <div class="form-group">
+                  <label for="start_date">Fecha de comienzo :</label>
+                  <input type='text' class="form-control" ng-model="task.start_date" jqdatepicker id="start_date">
+                </div>
+              </div>
+              <div class="col-xs-6">  
+                <div class="form-group">
+                  <label for="finish_date">Fecha de finalizacion :</label>
+                  <input type="text" class="form-control" ng-model="task.finish_date" jqdatepicker id="finish_date"/>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-6"> 
+                <div class="form-group">
+                  <label for="description">Descripcion :</label>
+                  <input type='text' class="form-control" ng-model="task.description" id="description">
+                </div>
+              </div> 
+              <div class="col-xs-6"> 
+                <div class="form-group">
+                  <label for="sar">Sar :</label>
+                  <input type='text' class="form-control" ng-model="task.sar" id="sar">
+                </div>
+              </div> 
+            </div>
+            <div class="row">
+              <div class="col-xs-6"> 
+                <div class="form-group">
+                  <label for="turnover_code">Codigo de turnover :</label>
+                  <input type='text' class="form-control" ng-model="task.turnover_code" id="turnover_code">
+                </div>
+              </div>
+              <div class="col-xs-6"> 
+                <div class="form-group">
+                  <label for="priority">Prioridad :</label>
+                  <input type='text' class="form-control" ng-model="task.priority" id="priority">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xs-6"> 
+                <label for="statusSelect">Estado :</label>
+                <select required name="statusSelect" id="statusSelect" ng-model="task.status" class="form-control">
+                  <option ng-repeat="status in Tstatus" value="{{status.id}}">{{status.name}}</option>
+                </select>
+              </div>
+              <div class="col-xs-6"> 
+              </div>    
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" type="submit" ng-click="ok()">Guardar</button>
+          <button class="btn btn-default" ng-click="cancel()">Cerrar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
