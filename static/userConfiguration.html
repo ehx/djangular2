@@ -70,8 +70,8 @@
           <select size="10" multiple ng-model="available" 
           ng-options="client as client.first_name + ' ' + client.last_name for client in relNo"></select>         
 
-          <input id="moveright" type="button" value=">" ng-click="moveItem(available[0], relNo, relYes)" />
-          <input id="moveleft" type="button" value="<" ng-click="moveItem(relYes[0], relNo, available)" />
+          <input id="moveright" type="button" value=">" ng-click="moveItem(available[0], relNo, relYes, 'add')" />
+          <input id="moveleft" type="button" value="<" ng-click="moveItem(selected[0], relNo, available, 'delete')" />
 
           <label for="sclients">Seleccionados</label>
           <select size="10" multiple ng-model="selected" 
