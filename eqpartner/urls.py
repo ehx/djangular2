@@ -43,7 +43,7 @@ class ModuleSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('first_name', 'last_name', 'email', 'username')
+        fields = ('id', 'first_name', 'last_name', 'email', 'username')
         write_only_fields = ('password',)
         read_only_fields = ('is_staff', 'is_superuser', 'is_active', 'date_joined',)
 
@@ -52,19 +52,6 @@ class NotificationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Notification
         fields = ('id', 'user', 'ntype', 'notification', 'read')
-
-'''
-class ClientSerializerWriter(serializers.ModelSerializer):
-    class Meta:
-        model = Client
-'''
-'''
-class ClientSerializer(serializers.ModelSerializer):
-    organization = OrganizationSerializer()
-    class Meta:
-        model = Client
-        fields = ('id', 'name', 'lastname', 'address', 'telephone', 'mail')
-'''
 
 class TaskSerializerWriter(serializers.ModelSerializer):
     class Meta:
@@ -113,9 +100,8 @@ class UserClientSerializerWriter(serializers.ModelSerializer):
         fields = ('id', 'user', 'userR')
 
 class UserClientSerializer(serializers.ModelSerializer):
-    task = TaskSerializer();
     user = UserSerializer();
-    client = UserSerializer();
+    userR = UserSerializer();
 
     class Meta:
         model = UserClient
@@ -264,6 +250,13 @@ class UserClientViewSet(viewsets.ModelViewSet):
     filter_backends = (filters.DjangoFilterBackend,)
     filter_fields = ('id', 'user', 'userR')
 
+    def get_queryset(self):
+        queryset = super(UserClientViewSet, self).get_queryset() 
+        user_query = self.request.query_params.get('not_relationship', None)
+        if user_query:
+            return queryset.filter(~Q(user=user_query))
+        return queryset
+
     def get_serializer_class(self):
         if self.action == 'retrieve':
             return UserClientSerializer
@@ -306,7 +299,7 @@ router.register(r'task', TaskViewSet)
 #router.register(r'client', ClientViewSet)
 router.register(r'organization', OrganizationViewSet)
 router.register(r'taskComment', TaskCommentViewSet)
-router.register(r'user', UserViewSet)
+router.register(r'users', UserViewSet)
 router.register(r'notification', NotificationViewSet)
 router.register(r'todo', TodoViewSet)
 router.register(r'module', ModuleViewSet)

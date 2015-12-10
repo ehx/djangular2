@@ -53,8 +53,8 @@ class Client(models.Model):
         return self.name + ' ' + self.lastname
 
 class Task(models.Model):
-    user = models.ForeignKey(User, null=True, verbose_name='Usuario')
-    client = models.ForeignKey(User, null=True, verbose_name='Cliente', related_name="userR")
+    user = models.ForeignKey(User, null=True, verbose_name='Usuario', related_name="userTask")
+    client = models.ForeignKey(User, null=True, verbose_name='Cliente', related_name="userClient")
     title = models.CharField(max_length=100, verbose_name='Titulo de la tarea')
     turnover_code = models.CharField(default=0, max_length=50, verbose_name='Codigo en Turnover')
     priority = models.IntegerField(null=True, verbose_name='Orden')
@@ -69,7 +69,7 @@ class Task(models.Model):
     status = models.ForeignKey(Status, null=True, verbose_name="Estado")
     creation_date = models.DateField(null=True, blank=True,auto_now_add=True)
 
-    def __str__(self):   
+    def __str__(self):
         return self.title
 
 class TaskComment(models.Model):
@@ -79,7 +79,7 @@ class TaskComment(models.Model):
     docfile = models.FileField(upload_to='%Y-%m-%d', null=True)
     creation_date = models.DateTimeField(auto_now_add=True)
     
-    def __str__(self):   
+    def __str__(self):
         return self.user.first_name + ' ' + self.comment
 
     def delete(self,*args,**kwargs):
@@ -93,7 +93,7 @@ class UserClient(models.Model):
     user = models.ForeignKey(User)
     userR = models.ForeignKey(User, related_name="userR")
 
-    def __str__(self):   
+    def __str__(self):
         return self.user.last_name + ' / ' + self.userR.last_name
 
 class Todo(models.Model):
@@ -103,7 +103,7 @@ class Todo(models.Model):
     done = models.BooleanField(default=0, verbose_name='Completado')
     creation_date = models.DateTimeField(auto_now_add=True)
     
-    def __str__(self):   
+    def __str__(self):
         return self.user.first_name  + ' / ' + self.description 
 
 class Message(models.Model):
@@ -113,7 +113,7 @@ class Message(models.Model):
     read = models.BooleanField(default=0, verbose_name='Leido')
     creation_date = models.DateTimeField(auto_now_add=True)
     
-    def __str__(self):   
+    def __str__(self):
         return self.user.first_name  + ' / ' + self.client.name + ' @ ' + self.message
 
 class UserProfile(models.Model):
@@ -121,5 +121,5 @@ class UserProfile(models.Model):
     organization = models.ForeignKey(Organization, verbose_name="Organizacion")
     online = models.BooleanField(default=1, verbose_name='Online')
 
-    def __str__(self):   
+    def __str__(self):
         return self.user.first_name  + ' ' + self.user.last_name
