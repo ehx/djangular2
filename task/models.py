@@ -90,8 +90,8 @@ class TaskComment(models.Model):
         super(TaskComment, self).delete(*args,**kwargs)
 
 class UserClient(models.Model):
-    user = models.ForeignKey(User)
-    userR = models.ForeignKey(User, related_name="userR")
+    user = models.OneToOneField(User)
+    userR = models.OneToOneField(User, related_name="userR")
 
     def __str__(self):
         return self.user.last_name + ' / ' + self.userR.last_name

@@ -65,8 +65,7 @@ class TaskSerializer(serializers.ModelSerializer):
     user = UserSerializer()
     module = ModuleSerializer()
     status = StatusSerializer()
-    #client = ClientSerializer()
-    client = UserSerializer() #nuevo
+    client = UserSerializer()
     urgency = UrgencySerializer()
     class Meta:
         model = Task
@@ -128,6 +127,13 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
     filter_backends = (filters.DjangoFilterBackend,)
 
+    def get_queryset(self):
+        queryset = super(UserViewSet, self).get_queryset() 
+        user_query = self.request.query_params.get('ne', None)
+        if user_query:
+            return queryset.filter(~Q(id=user_query))
+        return queryset
+
 
 class UserProfileViewSet(viewsets.ModelViewSet):
     queryset = UserProfile.objects.all()
@@ -187,6 +193,7 @@ class OrganizationViewSet(viewsets.ModelViewSet):
     queryset = Organization.objects.all()
     serializer_class = OrganizationSerializer
     filter_backends = (filters.DjangoFilterBackend,)
+    filter_fields = ('id', 'name', 'address')
 
 
 class TaskCommentViewSet(viewsets.ModelViewSet):
@@ -250,12 +257,7 @@ class UserClientViewSet(viewsets.ModelViewSet):
     filter_backends = (filters.DjangoFilterBackend,)
     filter_fields = ('id', 'user', 'userR')
 
-    def get_queryset(self):
-        queryset = super(UserClientViewSet, self).get_queryset() 
-        user_query = self.request.query_params.get('not_relationship', None)
-        if user_query:
-            return queryset.filter(~Q(user=user_query))
-        return queryset
+
 
     def get_serializer_class(self):
         if self.action == 'retrieve':
@@ -267,8 +269,7 @@ class UserClientViewSet(viewsets.ModelViewSet):
 
 class MessageSerializer(serializers.ModelSerializer):
     user = UserSerializer()
-    #client = ClientSerializer()
-    client = UserSerializer() # nuevo
+    client = UserSerializer()
 
     class Meta:
         model = Message

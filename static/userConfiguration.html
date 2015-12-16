@@ -11,8 +11,9 @@
           <div class="form-group">
             <label for="available" class="col-sm-2 control-label">Disponible</label> 
             <div class="col-sm-10" style="margin-top: 5px;">
-              <input ng-model="config.online" class="js-switch"
-              ui-switch="{color: '#1ABB9C', secondaryColor: '#73879C', size : 'default'}" id="available" type="checkbox" />
+              <input ng-model="online" class="js-switch"
+              ui-switch="{color: '#1ABB9C', secondaryColor: '#73879C', size : 'default'}" id="available" type="checkbox" 
+              ng-click="changeStatus()"/>
             </div>
           </div>
           <div class="ln_solid"></div>
@@ -29,12 +30,6 @@
                 <input ng-model="user.eqmobile" type="checkbox" icheck>
               </div>
           </div>
-
-
-          <label>Basic:</label> <input type="checkbox" ng-model="config.online" class="js-switch" ui-switch /> 
-          {{ config.online ? "On" : "Off" }}<br>
-  <label>Custom:</label> <input type="checkbox" ng-model="config.online" class="js-switch" ui-switch="{color: '#E43B11', secondaryColor: '#F89279'}" /> {{ config.online ? "On" : "Off" }} <br>
-
 
           {{config.online}}
           <div class="ln_solid"></div>
@@ -66,16 +61,13 @@
 
         <form name="myForm">
           
-          <label for="nclients">Usuarios disponibles</label></br>
-          <select size="10" multiple ng-model="available" 
-          ng-options="client as client.first_name + ' ' + client.last_name for client in relNo"></select>         
+          <div isteven-multi-select input-model="relNo" output-model="relYes"
+            button-label="first_name last_name" item-label="first_name last_name maker"
+            tick-property="ticked">
+          </div>
 
-          <input id="moveright" type="button" value=">" ng-click="moveItem(available[0], relNo, relYes, 'add')" />
-          <input id="moveleft" type="button" value="<" ng-click="moveItem(selected[0], relNo, available, 'delete')" />
+          <input type="button" value="Guardar" ng-click="save()" />
 
-          <label for="sclients">Seleccionados</label>
-          <select size="10" multiple ng-model="selected" 
-          ng-options="client_userR as client.userR.first_name + ' ' + client.userR.last_name for client in relYes"></select>
         </form>
     </div>
   </div>

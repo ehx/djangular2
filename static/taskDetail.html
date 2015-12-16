@@ -118,17 +118,17 @@
                   <p>{{task.description}}</p>
                   <div class="project_detail">
                     <p class="title">Referente</p>
-                    <p>{{task.client.name}} {{task.client.lastname}}</p>
+                    <p>{{task.client.first_name}} {{task.client.last_name}}</p>
                     <p class="title">Asociado</p>
                     <p>{{task.user.first_name}} {{task.user.last_name}}</p>
                   </div>
                   <br />
                   
-                      <div class="mtop20">
-                        <button ng-if="!task.done" ng-click="doneTask()" class="btn btn-sm btn-info">Cerrar tarea</a>
-                        <button ng-if="task.done" ng-click="openTask()" class="btn btn-sm btn-info">Abrir tarea</a>
-                        <button ng-click="deleteTask()" class="btn btn-sm btn-danger">Borrar tarea</a>
-                      </div>
+                  <div class="mtop20">
+                    <button ng-if="!task.done" ng-click="doneTask()" class="btn btn-sm btn-info">Cerrar tarea</a>
+                    <button ng-if="task.done" ng-click="openTask()" class="btn btn-sm btn-info">Abrir tarea</a>
+                    <button ng-click="deleteTask()" class="btn btn-sm btn-danger">Borrar tarea</a>
+                  </div>
                   
                   <div ng-if="attachments.length > 0">
                     <div class="ln_solid"></div>
