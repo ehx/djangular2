@@ -90,11 +90,16 @@ class TaskComment(models.Model):
         super(TaskComment, self).delete(*args,**kwargs)
 
 class UserClient(models.Model):
-    user = models.OneToOneField(User)
-    userR = models.OneToOneField(User, related_name="userR")
+    user = models.ForeignKey(User)
+    userR = models.ForeignKey(User, related_name="userR")
+    relation = models.CharField(max_length=1, verbose_name='Relacion Directa/Hereda')
 
     def __str__(self):
-        return self.user.last_name + ' / ' + self.userR.last_name
+        return self.user.last_name + ' ' + self.user.first_name + ' / ' + self.userR.last_name + ' ' + self.userR.first_name + ' @ ' + self.relation
+
+    class Meta:
+        unique_together = ('user', 'userR')
+
 
 class Todo(models.Model):
     description = models.CharField(max_length=255, verbose_name='Descripcion')
@@ -122,4 +127,4 @@ class UserProfile(models.Model):
     online = models.BooleanField(default=1, verbose_name='Online')
 
     def __str__(self):
-        return self.user.first_name  + ' ' + self.user.last_name
+        return self.user.username

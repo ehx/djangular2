@@ -41,8 +41,9 @@
       <div id="wrapper">
         <div id="login" class="animate form">
           <br>
+          <toaster-container></toaster-container>
           <section class="login_content">
-            <form ng-submit="submit()">
+            <form ng-submit="login()">
               <h1>Login Form</h1>
               <div>
                 <input ng-model="usr.username" type="text" class="form-control" placeholder="Usuario" required="" />

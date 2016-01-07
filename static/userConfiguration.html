@@ -40,19 +40,19 @@
                 </br> 
                 <div ng-repeat="client in clients | filter:{$:searchClient}" class="col-md-4 col-sm-4 col-xs-12 animated fadeInDown">
                   <div class="well profile_view" ng-click="selectToggle(client.id)">
-                      <div class="col-sm-12">
-                        <h4 class="brief"><i>{{client.organization.name}}</i></h4>
-                        <div class="left col-xs-7">
-                            <h2>{{client.name}} {{client.lastname}}</h2>
-                            <ul class="list-unstyled">
-                              <li><i class="fa fa-map-marker"></i> {{client.address}}</li> 
-                              <li><i class="fa fa-phone"></i> {{client.telephone}}</li>
-                            </ul>
-                        </div>
-                        <div class="right col-xs-5 text-center">
-                            <img src="images/img.jpg" alt="" class="img-circle img-responsive">
-                        </div>
+                    <div class="col-sm-12">
+                      <h4 class="brief"><i>{{client.organization.name}}</i></h4>
+                      <div class="left col-xs-7">
+                        <h2>{{client.name}} {{client.lastname}}</h2>
+                        <ul class="list-unstyled">
+                          <li><i class="fa fa-map-marker"></i> {{client.address}}</li> 
+                          <li><i class="fa fa-phone"></i> {{client.telephone}}</li>
+                        </ul>
                       </div>
+                      <div class="right col-xs-5 text-center">
+                        <img src="images/img.jpg" alt="" class="img-circle img-responsive">
+                      </div>
+                    </div>
                   </div>
                 </div>
             </div>

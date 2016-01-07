@@ -135,7 +135,7 @@
                       <h5><u>Adjuntos</u></h5>
                       <ul class="list-unstyled project_files">
                         <li ng-repeat="att in attachments">
-                          <a href="">
+                          <a href="{{ att.docfile }}">
                             <i class="{{ att.docfile | extension }}">
                             </i>{{att.docfile | lastWord }}
                           </a>

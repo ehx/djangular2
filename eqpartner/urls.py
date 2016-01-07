@@ -96,7 +96,7 @@ class TodoSerializer(serializers.ModelSerializer):
 class UserClientSerializerWriter(serializers.ModelSerializer):
     class Meta:
         model = UserClient
-        fields = ('id', 'user', 'userR')
+        fields = ('id', 'user', 'userR', 'relation')
 
 class UserClientSerializer(serializers.ModelSerializer):
     user = UserSerializer();
@@ -104,7 +104,7 @@ class UserClientSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserClient
-        fields = ('id', 'user', 'userR')
+        fields = ('id', 'user', 'userR', 'relation')
 
 class UserProfileSerializerWriter(serializers.ModelSerializer):
     class Meta:
@@ -255,9 +255,7 @@ class UserClientViewSet(viewsets.ModelViewSet):
     queryset = UserClient.objects.all()
     serializer_class = UserClientSerializer
     filter_backends = (filters.DjangoFilterBackend,)
-    filter_fields = ('id', 'user', 'userR')
-
-
+    filter_fields = ('id', 'user', 'userR', 'relation')
 
     def get_serializer_class(self):
         if self.action == 'retrieve':

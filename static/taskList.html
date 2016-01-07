@@ -81,7 +81,7 @@
         </div>
         <div ng-repeat="client in clients 
         | orderBy:['userR.last_name','userR.first_name'] 
-        | filter: { userR : {first_name:searchReferent, last_name:searchReferent }}" class="animated flipInY col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        | filter:filterFullname" class="animated flipInY col-lg-12 col-md-12 col-sm-12 col-xs-12">
           <div ng-click="vm.client = client.userR.id" ng-class="{ marcado: vm.client === client.userR.id }" class="tile-stats padd-top">
             <h2>{{client.userR.last_name}} {{client.userR.first_name}}</h2>
           </div>
