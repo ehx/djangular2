@@ -11,9 +11,9 @@
           <div class="form-group">
             <label for="available" class="col-sm-2 control-label">Disponible</label> 
             <div class="col-sm-10" style="margin-top: 5px;">
-              <input ng-model="online" class="js-switch"
+              <input ng-model="user.online" class="js-switch"
               ui-switch="{color: '#1ABB9C', secondaryColor: '#73879C', size : 'default'}" id="available" type="checkbox" 
-              ng-click="changeStatus()"/>
+              ng-change="changeStatus()"/>
             </div>
           </div>
           <div class="ln_solid"></div>
@@ -31,7 +31,7 @@
               </div>
           </div>
 
-          {{config.online}}
+          {{user.online}}
           <div class="ln_solid"></div>
           <h5>Configurar lista de tareas :</h5>
           <div class="form-group">

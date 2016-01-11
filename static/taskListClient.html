@@ -27,7 +27,11 @@
               </tr>
             </thead>
             <tbody>
-              <tr ng-repeat="tdTask in tasks | filter: (vm.client || '') && {client: {id : vm.client.userR.id}} | filter:{$:searchTask}">
+              <tr ng-repeat="tdTask in tasks | 
+              filter: (vm.client || '') && 
+              {client: {id : vm.client}} &&
+              {user: {id : vm.client}} | 
+              filter:{$:searchTask}">
                 <td>
                   {{ tdTask.module.tag }}
                 </td>

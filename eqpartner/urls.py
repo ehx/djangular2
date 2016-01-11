@@ -10,6 +10,7 @@ from task.models import *
 from rest_framework.pagination import PageNumberPagination
 from django.conf.urls import *
 from django.db.models import Q
+from task.permissions import IsOwnerOrReadOnly
 
 class StandardResultsSetPagination(PageNumberPagination):
     page_size = 5
@@ -52,6 +53,7 @@ class NotificationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Notification
         fields = ('id', 'user', 'ntype', 'notification', 'read')
+
 
 class TaskSerializerWriter(serializers.ModelSerializer):
     class Meta:
@@ -98,6 +100,7 @@ class UserClientSerializerWriter(serializers.ModelSerializer):
         model = UserClient
         fields = ('id', 'user', 'userR', 'relation')
 
+
 class UserClientSerializer(serializers.ModelSerializer):
     user = UserSerializer();
     userR = UserSerializer();
@@ -106,15 +109,18 @@ class UserClientSerializer(serializers.ModelSerializer):
         model = UserClient
         fields = ('id', 'user', 'userR', 'relation')
 
+
 class UserProfileSerializerWriter(serializers.ModelSerializer):
     class Meta:
         model = UserProfile
+
 
 class UserProfileSerializer(serializers.ModelSerializer):
     user = UserSerializer();
 
     class Meta:
         model = UserProfile
+
 
 class ModuleViewSet(viewsets.ModelViewSet):
     queryset = Module.objects.all()
@@ -149,6 +155,7 @@ class UserProfileViewSet(viewsets.ModelViewSet):
             return UserProfileSerializer
         return UserProfileSerializerWriter
 
+
 class NotificationViewSet(viewsets.ModelViewSet):
     queryset = Notification.objects.all()
     serializer_class = NotificationSerializer
@@ -165,6 +172,14 @@ class TaskViewSet(viewsets.ModelViewSet):
     queryset = Task.objects.all().order_by('priority')
     filter_backends = (filters.DjangoFilterBackend,)
     filter_fields = ('id', 'title', 'done', 'user', 'client')
+    permission_classes = (IsOwnerOrReadOnly,)
+
+    def get_queryset(self):
+        queryset = super(TaskViewSet, self).get_queryset()
+        user_client = self.request.query_params.get('user_client', None)
+        if user_client:
+            return queryset.filter(Q(client=user_client) | Q(user=user_client))
+        return queryset
 
     def get_serializer_class(self):
         # get one task
@@ -202,6 +217,7 @@ class TaskCommentViewSet(viewsets.ModelViewSet):
     filter_backends = (filters.DjangoFilterBackend,)
     filter_fields = ('id', 'task', 'user', 'docfile')
     pagination_class = StandardResultsSetPagination
+    permission_classes = (IsOwnerOrReadOnly,)
 
     def get_queryset(self):
         queryset = super(TaskCommentViewSet, self).get_queryset() 
@@ -273,6 +289,7 @@ class MessageSerializer(serializers.ModelSerializer):
         model = Message
         fields = ('id', 'owner', 'receptor', 'message')
 
+
 class MessageSerializerWriter(serializers.ModelSerializer):
     class Meta:
         model = Message
@@ -295,7 +312,6 @@ class MessageViewSet(viewsets.ModelViewSet):
 
 router = routers.DefaultRouter()
 router.register(r'task', TaskViewSet)
-#router.register(r'client', ClientViewSet)
 router.register(r'organization', OrganizationViewSet)
 router.register(r'taskComment', TaskCommentViewSet)
 router.register(r'users', UserViewSet)
