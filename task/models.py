@@ -72,6 +72,14 @@ class Task(models.Model):
     def __str__(self):
         return self.title
 
+    def pre_save(self, obj):
+        obj.user = self.request.user
+
+    def taskpermission(self):
+        rel = UserClient.objects.filter(Q(client=self.user) | Q(user=self.user))
+        return rel > 0
+
+
 class TaskComment(models.Model):
     task = models.ForeignKey(Task, verbose_name="Tarea")
     user = models.ForeignKey(User, verbose_name="Usuario")
@@ -106,10 +114,11 @@ class Todo(models.Model):
     user = models.ForeignKey(User, verbose_name="Usuario")
     task = models.ForeignKey(Task, null=True, verbose_name="Tarea")
     done = models.BooleanField(default=0, verbose_name='Completado')
-    creation_date = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
     
     def __str__(self):
-        return self.user.first_name  + ' / ' + self.description 
+        return str(self.created_at) + ' @ ' + self.user.first_name  + ' / ' + self.description 
 
 class Message(models.Model):
     owner = models.OneToOneField(User, verbose_name="Usuario que envia", related_name="user_owner", unique=True)

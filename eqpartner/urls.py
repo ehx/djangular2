@@ -11,6 +11,7 @@ from rest_framework.pagination import PageNumberPagination
 from django.conf.urls import *
 from django.db.models import Q
 from task.permissions import IsOwnerOrReadOnly
+from rest_framework.permissions import IsAuthenticated
 
 class StandardResultsSetPagination(PageNumberPagination):
     page_size = 5
@@ -92,7 +93,7 @@ class TaskCommentSerializer(serializers.ModelSerializer):
 class TodoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Todo
-        fields = ('id', 'done', 'user', 'description', 'task')
+        fields = ('id', 'done', 'user', 'description', 'task', 'created_at', 'updated_at')
 
 
 class UserClientSerializerWriter(serializers.ModelSerializer):
@@ -172,7 +173,7 @@ class TaskViewSet(viewsets.ModelViewSet):
     queryset = Task.objects.all().order_by('priority')
     filter_backends = (filters.DjangoFilterBackend,)
     filter_fields = ('id', 'title', 'done', 'user', 'client')
-    permission_classes = (IsOwnerOrReadOnly,)
+    permission_classes = (IsOwnerOrReadOnly, IsAuthenticated)
 
     def get_queryset(self):
         queryset = super(TaskViewSet, self).get_queryset()
@@ -272,6 +273,7 @@ class UserClientViewSet(viewsets.ModelViewSet):
     serializer_class = UserClientSerializer
     filter_backends = (filters.DjangoFilterBackend,)
     filter_fields = ('id', 'user', 'userR', 'relation')
+
 
     def get_serializer_class(self):
         if self.action == 'retrieve':

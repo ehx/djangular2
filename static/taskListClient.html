@@ -16,7 +16,7 @@
         <input ng-model="searchTask" tabindex="0" aria-invalid="false" type="text" class="form-control" placeholder="Filtrar tarea..." style="border-radius: 5px;">
         <!-- task list -->
         <div class="table-responsive">
-        <table class="table table-striped responsive-utilities">
+        <table class="table table-striped responsive-utilities export-table">
             <thead>
               <tr>
                 <th>Modulo</th>
@@ -31,7 +31,8 @@
               filter: (vm.client || '') && 
               {client: {id : vm.client}} &&
               {user: {id : vm.client}} | 
-              filter:{$:searchTask}">
+              filter:{$:searchTask}"
+              >
                 <td>
                   {{ tdTask.module.tag }}
                 </td>
@@ -208,3 +209,13 @@
     </div>
   </div>
 </div>
+
+<!--
+<button type="button" ng-csv="tasks" field-separator=";" filename="test.csv" csv-header="getHeader()">Exportar</button>
+
+<div class="btn-group" role="group">
+  <button type="button" class="btn btn-default" ng-click="exportAction('pdf')">pdf</button>
+  <button type="button" class="btn btn-default" ng-click="exportAction('excel')">excel</button>
+  <button type="button" class="btn btn-default" ng-click="exportAction('doc')">doc</button>
+</div>
+-->

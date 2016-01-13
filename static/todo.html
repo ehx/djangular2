@@ -21,7 +21,10 @@
       <li ng-show="todoTasks !== []" ng-repeat="todo in todoTasks | filter:statusFilter track by $index">
         <p>
           <input icheck ng-model="todo.done" ng-change="doneTodo(todo.id)" type="checkbox"> 
-          {{todo.description}}
+          {{todo.created_at | moment:'DD/MM/YYYY' }} - {{todo.description}}
+          <a confirmed-click="deleteTodo(todo.id)" ng-confirm-click="Desea borrar ?" class="btn btn-danger btn-xs pull-right">
+            <i class="fa fa-trash-o"></i>
+          </a>
         </p>
       </li>
     </ul> 
