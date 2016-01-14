@@ -122,7 +122,7 @@
                 <div class="form-group">
                   <label for="clientSelect">Referente :</label>
                   <select required name="clientSelect" id="clientSelect" ng-model="task.client" class="form-control">
-                    <option ng-repeat="option in clientsM" value="{{option.userR.id}}">{{option.userR.first_name}} {{option.userR.last_name}}</option>
+                    <option ng-repeat="option in clientsM" value="{{option.id}}">{{option.name}} {{option.lastname}}</option>
                   </select>
                 </div>
               </div>
@@ -166,16 +166,16 @@
                 </div> 
                 <div class="col-xs-6"> 
                   <div class="form-group">
-                    <label for="sar">Sar :</label>
-                    <input type='text' class="form-control" ng-model="task.sar" id="sar">
+                    <label for="identificator">Identificador :</label>
+                    <input type='text' class="form-control" ng-model="task.identificator" id="identificator">
                   </div>
                 </div> 
               </div>
               <div class="row">
                 <div class="col-xs-6"> 
                   <div class="form-group">
-                    <label for="turnover_code">Codigo de turnover :</label>
-                    <input type='text' class="form-control" ng-model="task.turnover_code" id="turnover_code">
+                    <label for="implementationId">Id. Administrador de implementacion :</label>
+                    <input type='text' class="form-control" ng-model="task.implementationId" id="implementationId">
                   </div>
                 </div>
                 <div class="col-xs-6"> 
