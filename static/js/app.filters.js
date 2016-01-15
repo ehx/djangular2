@@ -1,21 +1,20 @@
 'use strict';
-var app = angular.module('app')
 
 // muestra cuanto tiempo paso desde una fecha
-app.filter('moment', function() {
+angular.module('app').filter('moment', function() {
   return function(dateString, format) {
     return moment(dateString).format(format);
 	};
-});
+})
 
 // convierte en html seguro
-app.filter('rawHtml', ['$sce', function($sce){
+angular.module('app').filter('rawHtml', ['$sce', function($sce){
   return function(val) {
     return $sce.trustAsHtml(val);
   };
-}]);
+}])
 
-app.filter('lastWord', ['$sce', function($sce){
+angular.module('app').filter('lastWord', ['$sce', function($sce){
   return function(txt) {
   	if(txt){
   		var txtCut = txt.split("/"); 
@@ -24,9 +23,10 @@ app.filter('lastWord', ['$sce', function($sce){
   		return false;	
   	}
   };
-}]);
+}])
 
-app.filter('extension', ['$sce', function($sce){
+// aplica icono segun extension del archivo
+angular.module('app').filter('extension', ['$sce', function($sce){
   return function(txt) {
     if(txt){
       var txtCut = txt.split(".");
@@ -48,4 +48,4 @@ app.filter('extension', ['$sce', function($sce){
       }
   	};
 	}}
-]);
+])

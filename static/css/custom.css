@@ -6450,6 +6450,12 @@ ul.notifications {
     display:inline-block;
 }
 
+.divisor{
+    border-bottom: 2px solid #FFFFFF;
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
 #logo-eq {
     width: 15%;
     height: 15%;

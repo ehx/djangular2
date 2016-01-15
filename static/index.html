@@ -111,27 +111,27 @@
                 </a>
                 <ul id="menu1" class="dropdown-menu list-unstyled msg_list animated fadeInDown" role="menu">
                   <li ng-repeat="nt in notifications">
-                    <a>
+                    <a href="#/task/{{nt.task}}/">
                       <span class="image">
                         <img src="images/img.jpg" alt="Profile Image" />
                       </span>
                       <span>
-                        <span>{{nt.user}}</span>
+                        <span>{{nt.user.first_name}} {{nt.user.last_name}}</span>
                         <span class="time">{{nt.creation_date | moment:'DD/MM/YYYY'}}</span>
                       </span>
                       <span class="message">
-                        {{nt.ntype}}
+                        <span ng-bind-html="nt.ntype | rawHtml" class="message"></span>
                       </span>
                     </a>
                   </li>
-                  <li>
+                  <!--<li>
                     <div class="text-center">
                       <a>
                         <strong>Ver todas las alertas</strong>
                         <i class="fa fa-angle-right"></i>
                       </a>
                     </div>
-                  </li>
+                  </li>-->
                 </ul>
               </li>
             </ul>
@@ -200,15 +200,17 @@
   <script type="text/javascript" src="js/tableExport/jspdf/jspdf.js"></script>
   <script type="text/javascript" src="js/tableExport/jspdf/libs/base64.js"></script>
 
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-filter/0.5.8/angular-filter.min.js"></script>
 
-  
   <script type="text/javascript" src="app.min.js"></script>
   <script type="text/javascript" src="js/app.config.js"></script>
   <script type="text/javascript" src="js/app.run.js"></script>
-  <script type="text/javascript" src="js/filters/filters.js"></script>
-  <script type="text/javascript" src="js/services/loginService.js"></script>
-
+  <script type="text/javascript" src="js/app.directives.js"></script>
+  <script type="text/javascript" src="js/app.resources.js"></script>
+  <script type="text/javascript" src="js/app.filters.js"></script>
+  <script type="text/javascript" src="js/app.loginService.js"></script>
   
+
   <script type="text/javascript" src="js/custom.js"></script>
   <script type="text/javascript" src="js/bootstrap.min.js"></script>
   

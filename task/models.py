@@ -33,8 +33,9 @@ class Module(models.Model):
 
 class Notification(models.Model):
     user = models.ForeignKey(User, verbose_name='Usuario')
+    userN = models.ForeignKey(User, related_name="userN", verbose_name='Usuario que recibe notificacion')
     ntype = models.CharField(max_length=50, verbose_name="Tipo de notificacion")
-    notification = models.IntegerField(verbose_name="Notification")
+    task = models.IntegerField(verbose_name="Notification")
     read = models.BooleanField(default=0, verbose_name="Leida?");
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -67,7 +68,7 @@ class Task(models.Model):
     user = models.ForeignKey(User, null=True, verbose_name='Usuario', related_name="userTask")
     client = models.ForeignKey(User, null=True, verbose_name='Cliente', related_name="userClient")
     title = models.CharField(max_length=100, verbose_name='Titulo de la tarea')
-    implementationId = models.CharField(default=0, max_length=50, verbose_name='Codigo en Turnover')
+    implementation_id = models.CharField(default=0, max_length=50, verbose_name='Codigo en Turnover')
     priority = models.IntegerField(null=True, verbose_name='Orden')
     urgency = models.ForeignKey(Urgency, null=True, verbose_name='Urgencia')
     start_date = models.DateField(null=True, verbose_name='Fecha de Inicio')
@@ -87,16 +88,11 @@ class Task(models.Model):
     def pre_save(self, obj):
         obj.user = self.request.user
 
-    def taskpermission(self):
-        rel = UserClient.objects.filter(Q(client=self.user) | Q(user=self.user))
-        return rel > 0
-
-
 class TaskComment(models.Model):
     task = models.ForeignKey(Task, verbose_name="Tarea")
     user = models.ForeignKey(User, verbose_name="Usuario")
     comment = models.CharField(max_length= 5000, verbose_name="Comentario")
-    docfile = models.FileField(upload_to='%Y-%m-%d', null=True)
+    docfile = models.FileField(upload_to='%Y-%m-%d', null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     
